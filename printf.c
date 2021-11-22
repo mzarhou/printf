@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/22 22:26:32 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/22 22:53:05 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,40 +50,59 @@ int	ft_getCcount(const char *format)
 
 int	ft_print_str(const char *format, va_list args)
 {
-	char	*res;
 	int		i;
 	int		count;
-	int		*arr;
+	t_list *list;
+	int		c;
 
 	i = 0;
-	res = ft_strdup("");
+	count = 0;
+	list = 0;
 	while (format[i])
 	{
 		if (ft_checkfor('c', format, i))
-			res = ft_strjoin_free(res, ft_char2str(va_arg(args, int)));
+		{
+			c = va_arg(args, int);
+			if (c == 0)
+				ft_lstadd_back(&list, ft_lstnew(0));
+			else
+				ft_lstadd_back(&list, ft_lstnew(ft_char2str(c)));
+		}
 		else if (ft_checkfor('s', format, i))
-			res = ft_strjoin_free(res, ft_getstr(va_arg(args, char *)));
+			ft_lstadd_back(&list, ft_lstnew(ft_getstr(va_arg(args, char *))));
 		else if (ft_checkfor('p', format, i))
-			res = ft_strjoin_free(res, ft_getaddr(va_arg(args, void *)));
+			ft_lstadd_back(&list, ft_lstnew(ft_getaddr(va_arg(args, void *))));
 		else if (ft_checkfor('d', format, i))
-			res = ft_strjoin_free(res, ft_itoa(va_arg(args, int)));
+			ft_lstadd_back(&list, ft_lstnew(ft_itoa(va_arg(args, int))));
 		else if (ft_checkfor('i', format, i))
-			res = ft_strjoin_free(res, ft_itoa(va_arg(args, int)));
+			ft_lstadd_back(&list, ft_lstnew(ft_itoa(va_arg(args, int))));
 		else if (ft_checkfor('u', format, i))
-			res = ft_strjoin_free(res, ft_utoa(va_arg(args, unsigned int)));
+			ft_lstadd_back(&list, ft_lstnew(ft_utoa(va_arg(args, unsigned int))));
 		else if (ft_checkfor('x', format, i))
-			res = ft_strjoin_free(res, ft_uint2hexa8(va_arg(args, int), 0));
+			ft_lstadd_back(&list, ft_lstnew(ft_uint2hexa8(va_arg(args, int), 0)));
 		else if (ft_checkfor('X', format, i))
-			res = ft_strjoin_free(res, ft_uint2hexa8(va_arg(args, int), 1));
+			ft_lstadd_back(&list, ft_lstnew(ft_uint2hexa8(va_arg(args, int), 1)));
 		else if (ft_checkfor('%', format, i))
-			res = ft_strjoin_free(res, ft_char2str('%'));
+			ft_lstadd_back(&list, ft_lstnew(ft_char2str('%')));
 		else
-			res = ft_strjoin_free(res, ft_char2str(format[i--]));
+			ft_lstadd_back(&list, ft_lstnew(ft_char2str(format[i--])));
 		i += 2;
 	}
-	count = ft_strlen(res);
-	ft_putstr_fd(res, 1);
-	free(res);
+	while (list)
+	{
+		if (!list->content)
+		{
+			count += 1;
+			ft_putchar_fd(0, 1);
+		}
+		else
+		{
+			count += ft_strlen(list->content);
+			ft_putstr_fd(list->content, 1);
+		}
+		list = list->next;
+	}
+	ft_lstclear(&list, free);
 	return (count);
 }
 
