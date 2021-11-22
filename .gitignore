@@ -1,0 +1,6 @@
+.vscode/
+*.out
+obj
+libftprintf.a
+*.swp
+*.o
