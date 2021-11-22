@@ -6,11 +6,11 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/22 18:51:36 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/22 22:26:32 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_checkfor(char c, const char *format, int index)
 {
@@ -18,22 +18,6 @@ int	ft_checkfor(char c, const char *format, int index)
 		return (1);
 	return (0);
 }
-
-// char	*ft_addchar(char *res, char c)
-// {
-// 	int		len;
-// 	char	*str;
-
-// 	if (!res)
-// 		res = ft_strdup("");
-// 	len = ft_strlen(res);
-// 	str = (char *)malloc(len + 2);
-// 	str[len] = c;
-// 	str[len + 1] = 0;
-// 	ft_memcpy(str, res, len);
-// 	free(res);
-// 	return (str);
-// }
 
 char	*ft_getstr(const char *str)
 {
@@ -50,11 +34,26 @@ char	*ft_getaddr(void *ptr)
 	return (ft_strjoin_free(ft_strdup("0x"), ft_uint2hexa(uptr, 0)));
 }
 
+int	ft_getCcount(const char *format)
+{
+	int	count;
+
+	count = 0;
+	while (format && *format)
+	{
+		if (*format == '%' && *(format + 1) == 'c')
+			count++;
+		format++;
+	}
+	return (count);
+}
+
 int	ft_print_str(const char *format, va_list args)
 {
 	char	*res;
 	int		i;
 	int		count;
+	int		*arr;
 
 	i = 0;
 	res = ft_strdup("");
@@ -70,8 +69,8 @@ int	ft_print_str(const char *format, va_list args)
 			res = ft_strjoin_free(res, ft_itoa(va_arg(args, int)));
 		else if (ft_checkfor('i', format, i))
 			res = ft_strjoin_free(res, ft_itoa(va_arg(args, int)));
-		else if (ft_checkfor('i', format, i))
-			res = ft_strjoin_free(res, ft_itoa(va_arg(args, unsigned int)));
+		else if (ft_checkfor('u', format, i))
+			res = ft_strjoin_free(res, ft_utoa(va_arg(args, unsigned int)));
 		else if (ft_checkfor('x', format, i))
 			res = ft_strjoin_free(res, ft_uint2hexa8(va_arg(args, int), 0));
 		else if (ft_checkfor('X', format, i))
@@ -101,11 +100,11 @@ int	ft_printf(const char *format, ...)
 	return (nb_chars);
 }
 
-int main()
-{
-	int a = -4;
-	// ft_printf("%x %d %s\n", -16, 16, "here we go");
-	//    printf("%x %d %s\n", -16, 16, "here we go");
-	uint8_t p = (uint8_t)257;
-	printf("%d\n", p);
-}
+// int main()
+// {
+// 	int a = -4;
+// 	// ft_printf("%x %d %s\n", -16, 16, "here we go");
+// 	//    printf("%x %d %s\n", -16, 16, "here we go");
+// 	uint8_t p = (uint8_t)257;
+// 	printf("%d\n", p);
+// }

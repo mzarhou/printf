@@ -6,16 +6,18 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:35:27 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/22 15:00:12 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/22 19:41:32 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 char	*ft_char2str(char c)
 {
 	char	*str;
 
+	if (c == 0)
+		return (ft_strdup(""));
 	str = (char *)malloc(2 * sizeof(char));
 	str[0] = c;
 	str[1] = 0;
