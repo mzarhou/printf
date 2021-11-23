@@ -1,4 +1,4 @@
-SRCS = $(shell find . -name "*.c" -not -name "main.c" -maxdepth 1 -type f)
+SRCS = $(shell find src -name "*.c" -type f)
 OBJS = ${SRCS:.c=.o} $(shell find libft/obj -name "*.o")
 
 NAME = libftprintf.a
@@ -20,9 +20,11 @@ $(LIBFT):
 	${MAKE} -C ${LIBFT}
 
 clean:
-	${RM} ${ODIR}
+	${MAKE} $@ -C ${LIBFT}
+	${RM} ${OBJS}
 
 fclean: clean
+	${MAKE} $@ -C ${LIBFT}
 	${RM} ${NAME}
 
 re: fclean all

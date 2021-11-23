@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_makeaddr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 17:55:58 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 17:47:48 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/23 16:27:02 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/23 17:04:21 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/ft_printf.h"
-#include <stdio.h>
+#include "ft_printf_makers.h"
 
-int main()
+t_list	*ft_makeaddr(va_list args)
 {
-	int	a = 4;
-	ft_printf("%#x\n", 4);
-	printf("%#x\n", a);
+	uintptr_t	uptr;
+
+	uptr = (uintptr_t)va_arg(args, void *);
+	return (ft_lstnew(ft_strjoin_free(ft_strdup("0x"), ft_uint2hexa(uptr))));
 }

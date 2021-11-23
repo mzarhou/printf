@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_utils.c                                     :+:      :+:    :+:   */
+/*   ft_makestr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 00:57:51 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 01:46:34 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/23 16:27:13 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/23 16:31:36 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-t_list	*ft_makeint(va_list args)
-{
-	return (ft_lstnew(ft_itoa(va_arg(args, int))));
-}
+#include "ft_printf_makers.h"
 
 t_list	*ft_makestr(va_list args)
 {
@@ -25,24 +20,4 @@ t_list	*ft_makestr(va_list args)
 	if (str)
 		return (ft_lstnew(ft_strdup(str)));
 	return (ft_lstnew(ft_strdup("(null)")));
-}
-
-t_list	*ft_makeaddr(va_list args)
-{
-	uintptr_t	uptr;
-
-	uptr = (uintptr_t)va_arg(args, void *);
-	return (ft_lstnew(ft_strjoin_free(ft_strdup("0x"), ft_uint2hexa(uptr))));
-}
-
-t_list	*ft_makehexa(va_list args, int uppercase)
-{
-	return (ft_lstnew(ft_uint2hexa8(va_arg(args, int), uppercase)));
-}
-
-t_list	*ft_makeuint(va_list args)
-{
-	return (ft_lstnew(
-			ft_utoa(va_arg(args, unsigned int))
-		));
 }

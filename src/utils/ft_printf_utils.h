@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_printf_utils.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/20 15:05:17 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 01:47:23 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/23 16:34:17 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/23 17:09:09 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdarg.h>
-# include <unistd.h>
-# include <stdio.h>
+#ifndef FT_PRINTF_UTILS_H
+# define FT_PRINTF_UTILS_H
+# include "../../libft/libft.h"
+# include "../ft_printf.h"
 
 int		ft_printf(const char *format, ...);
 

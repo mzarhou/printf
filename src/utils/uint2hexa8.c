@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   uint2hexa8.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 17:55:58 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 17:47:48 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/22 13:00:07 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/23 16:35:04 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/ft_printf.h"
-#include <stdio.h>
+#include "ft_printf_utils.h"
 
-int main()
+char	*ft_uint2hexa8(uint32_t a, int uppercase)
 {
-	int	a = 4;
-	ft_printf("%#x\n", 4);
-	printf("%#x\n", a);
+	char	*base;
+
+	base = "0123456789abcdef";
+	if (uppercase)
+		base = "0123456789ABCDEF";
+	if (a < 16)
+		return (ft_char2str(base[a]));
+	return (ft_strjoin_free(
+			ft_uint2hexa8(a / 16, uppercase),
+			ft_uint2hexa8(a % 16, uppercase)));
 }

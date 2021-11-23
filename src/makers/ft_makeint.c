@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_makeint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 17:55:58 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 17:47:48 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/23 16:26:39 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/23 16:31:31 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/ft_printf.h"
-#include <stdio.h>
+#include "ft_printf_makers.h"
 
-int main()
+t_list	*ft_makeint(va_list args)
 {
-	int	a = 4;
-	ft_printf("%#x\n", 4);
-	printf("%#x\n", a);
+	return (ft_lstnew(ft_itoa(va_arg(args, int))));
 }

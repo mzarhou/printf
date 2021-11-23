@@ -6,12 +6,13 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 01:44:07 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:09:24 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "ft_printf_utils.h"
+#include "utils/ft_printf_utils.h"
+#include "makers/ft_printf_makers.h"
 
 int	ft_get_res_len(t_list *list)
 {
@@ -23,7 +24,7 @@ int	ft_get_res_len(t_list *list)
 		if (!list->content)
 			count += 1;
 		else
-			count += ft_strlen(list->content);
+			count += ft_strlen((char *)list->content);
 		list = list->next;
 	}
 	return (count);
@@ -34,7 +35,7 @@ void	ft_print_result(void *str)
 	if (!str)
 		ft_putchar_fd(0, 1);
 	else
-		ft_putstr_fd(str, 1);
+		ft_putstr_fd((char *)str, 1);
 }
 
 int	ft_fill_list(t_list **list_ptr, va_list args, const char *format, int index)
