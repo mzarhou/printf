@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 01:00:27 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 21:41:43 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/23 21:58:20 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct format
 t_list	*ft_makeint(va_list args, t_format format);
 t_list	*ft_makestr(va_list args, t_format format);
 t_list	*ft_makeaddr(va_list args, t_format format);
+t_list	*ft_makechar(va_list args, t_format format);
 t_list	*ft_makehexa(va_list args, t_format format, int uppercase);
 t_list	*ft_makeuint(va_list args, t_format format);
 #endif

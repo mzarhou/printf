@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 17:09:24 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/23 21:59:31 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,8 @@ void	ft_print_result(void *str)
 
 int	ft_fill_list(t_list **list_ptr, va_list args, const char *format, int index)
 {
-	char	c;
-
 	if (ft_checkfor('c', format, index))
-	{
-		c = va_arg(args, int);
-		if (c == 0)
-			ft_lstadd_back(list_ptr, ft_lstnew(0));
-		else
-			ft_lstadd_back(list_ptr, ft_lstnew(ft_char2str(c)));
-	}
+		ft_lstadd_back(list_ptr, ft_makechar(args));
 	else if (ft_checkfor('d', format, index))
 		ft_lstadd_back(list_ptr, ft_makeint(args));
 	else if (ft_checkfor('i', format, index))
