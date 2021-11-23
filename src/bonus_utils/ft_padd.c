@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_bonus_utils.h                            :+:      :+:    :+:   */
+/*   ft_padd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 20:43:03 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 23:44:10 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/23 23:43:26 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/23 23:43:45 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_BONUS_UTILS_H
-# define FT_PRINTF_BONUS_UTILS_H
-# include "../../libft/libft.h"
-# include "../ft_printf.h"
-# include "../makers/ft_printf_makers.h"
+#include "ft_printf_bonus_utils.h"
 
-char	*ft_padd_left(const char *s, char c, int count);
-char	*ft_padd_right(const char *s, char c, int count);
-char	*ft_padd(const char *str, char c, int count, int right);
-#endif
+char	*ft_padd(const char *str, char c, int count, int right)
+{
+	if (right)
+		return (ft_padd_right(str, c, count));
+	return (ft_padd_left(str, c, count));
+}
