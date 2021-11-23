@@ -6,102 +6,88 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/22 22:53:05 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/23 01:44:07 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "ft_printf_utils.h"
 
-int	ft_checkfor(char c, const char *format, int index)
-{
-	if (format[index] == '%' && format[index + 1] == c)
-		return (1);
-	return (0);
-}
-
-char	*ft_getstr(const char *str)
-{
-	if (str)
-		return (ft_strdup(str));
-	return (ft_strdup("(null)"));
-}
-
-char	*ft_getaddr(void *ptr)
-{
-	uintptr_t	uptr;
-
-	uptr = (uintptr_t)ptr;
-	return (ft_strjoin_free(ft_strdup("0x"), ft_uint2hexa(uptr, 0)));
-}
-
-int	ft_getCcount(const char *format)
+int	ft_get_res_len(t_list *list)
 {
 	int	count;
 
 	count = 0;
-	while (format && *format)
+	while (list)
 	{
-		if (*format == '%' && *(format + 1) == 'c')
-			count++;
-		format++;
+		if (!list->content)
+			count += 1;
+		else
+			count += ft_strlen(list->content);
+		list = list->next;
 	}
 	return (count);
+}
+
+void	ft_print_result(void *str)
+{
+	if (!str)
+		ft_putchar_fd(0, 1);
+	else
+		ft_putstr_fd(str, 1);
+}
+
+int	ft_fill_list(t_list **list_ptr, va_list args, const char *format, int index)
+{
+	char	c;
+
+	if (ft_checkfor('c', format, index))
+	{
+		c = va_arg(args, int);
+		if (c == 0)
+			ft_lstadd_back(list_ptr, ft_lstnew(0));
+		else
+			ft_lstadd_back(list_ptr, ft_lstnew(ft_char2str(c)));
+	}
+	else if (ft_checkfor('d', format, index))
+		ft_lstadd_back(list_ptr, ft_makeint(args));
+	else if (ft_checkfor('i', format, index))
+		ft_lstadd_back(list_ptr, ft_makeint(args));
+	else if (ft_checkfor('u', format, index))
+		ft_lstadd_back(list_ptr, ft_makeuint(args));
+	else if (ft_checkfor('x', format, index))
+		ft_lstadd_back(list_ptr, ft_makehexa(args, 0));
+	else if (ft_checkfor('X', format, index))
+		ft_lstadd_back(list_ptr, ft_makehexa(args, 1));
+	else
+		return (0);
+	return (1);
 }
 
 int	ft_print_str(const char *format, va_list args)
 {
 	int		i;
 	int		count;
-	t_list *list;
-	int		c;
+	t_list	*list;
 
 	i = 0;
-	count = 0;
 	list = 0;
 	while (format[i])
 	{
-		if (ft_checkfor('c', format, i))
-		{
-			c = va_arg(args, int);
-			if (c == 0)
-				ft_lstadd_back(&list, ft_lstnew(0));
-			else
-				ft_lstadd_back(&list, ft_lstnew(ft_char2str(c)));
-		}
-		else if (ft_checkfor('s', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_getstr(va_arg(args, char *))));
+		if (ft_fill_list(&list, args, format, i))
+			;
 		else if (ft_checkfor('p', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_getaddr(va_arg(args, void *))));
-		else if (ft_checkfor('d', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_itoa(va_arg(args, int))));
-		else if (ft_checkfor('i', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_itoa(va_arg(args, int))));
-		else if (ft_checkfor('u', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_utoa(va_arg(args, unsigned int))));
-		else if (ft_checkfor('x', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_uint2hexa8(va_arg(args, int), 0)));
-		else if (ft_checkfor('X', format, i))
-			ft_lstadd_back(&list, ft_lstnew(ft_uint2hexa8(va_arg(args, int), 1)));
+			ft_lstadd_back(&list, ft_makeaddr(args));
 		else if (ft_checkfor('%', format, i))
 			ft_lstadd_back(&list, ft_lstnew(ft_char2str('%')));
+		else if (ft_checkfor('s', format, i))
+			ft_lstadd_back(&list, ft_makestr(args));
 		else
 			ft_lstadd_back(&list, ft_lstnew(ft_char2str(format[i--])));
 		i += 2;
 	}
-	while (list)
-	{
-		if (!list->content)
-		{
-			count += 1;
-			ft_putchar_fd(0, 1);
-		}
-		else
-		{
-			count += ft_strlen(list->content);
-			ft_putstr_fd(list->content, 1);
-		}
-		list = list->next;
-	}
+	ft_lstiter(list, ft_print_result);
+	count = ft_get_res_len(list);
 	ft_lstclear(&list, free);
 	return (count);
 }
@@ -118,12 +104,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (nb_chars);
 }
-
-// int main()
-// {
-// 	int a = -4;
-// 	// ft_printf("%x %d %s\n", -16, 16, "here we go");
-// 	//    printf("%x %d %s\n", -16, 16, "here we go");
-// 	uint8_t p = (uint8_t)257;
-// 	printf("%d\n", p);
-// }
