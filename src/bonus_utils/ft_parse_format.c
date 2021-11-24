@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 19:56:33 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 19:57:08 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/24 21:23:54 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_get_minwidth(const char *str, const char *dot_ptr)
 	return (ft_atoi(dot_ptr));
 }
 
-int	ft_get_maxwidth(const char *str, char *dot_ptr)
+static int	ft_get_maxwidth(const char *str, char *dot_ptr)
 {
 	if (!str || !dot_ptr)
 		return (-1);
@@ -67,7 +67,7 @@ static int	ft_has_zero_flag(const char *str)
 	return (0);
 }
 
-static int	ft_parse_format(const char *str, t_format *format)
+int	ft_parse_format(const char *str, t_format *format)
 {
 	char	first_char;
 	char	last_char;
