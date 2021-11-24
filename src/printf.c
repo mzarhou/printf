@@ -6,10 +6,11 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/23 21:59:31 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/24 22:23:41 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include "ft_printf.h"
 #include "utils/ft_printf_utils.h"
 #include "makers/ft_printf_makers.h"
@@ -38,46 +39,48 @@ void	ft_print_result(void *str)
 		ft_putstr_fd((char *)str, 1);
 }
 
-int	ft_fill_list(t_list **list_ptr, va_list args, const char *format, int index)
+int	ft_fill_list(t_list **list_ptr, va_list args, const char *str, int *index)
 {
-	if (ft_checkfor('c', format, index))
-		ft_lstadd_back(list_ptr, ft_makechar(args));
-	else if (ft_checkfor('d', format, index))
-		ft_lstadd_back(list_ptr, ft_makeint(args));
-	else if (ft_checkfor('i', format, index))
-		ft_lstadd_back(list_ptr, ft_makeint(args));
-	else if (ft_checkfor('u', format, index))
-		ft_lstadd_back(list_ptr, ft_makeuint(args));
-	else if (ft_checkfor('x', format, index))
-		ft_lstadd_back(list_ptr, ft_makehexa(args, 0));
-	else if (ft_checkfor('X', format, index))
-		ft_lstadd_back(list_ptr, ft_makehexa(args, 1));
+	t_format	format;
+
+	if (ft_checkfor('c', str, index, &format))
+		ft_lstadd_back(list_ptr, ft_makechar(list_ptr, args, &format));
+	else if (ft_checkfor('d', str, index, &format))
+		ft_lstadd_back(list_ptr, ft_makeint(args, &format));
+	else if (ft_checkfor('i', str, index, &format))
+		ft_lstadd_back(list_ptr, ft_makeint(args, &format));
+	else if (ft_checkfor('u', str, index, &format))
+		ft_lstadd_back(list_ptr, ft_makeuint(args, &format));
+	else if (ft_checkfor('x', str, index, &format))
+		ft_lstadd_back(list_ptr, ft_makehexa(args, &format, 0));
+	else if (ft_checkfor('X', str, index, &format))
+		ft_lstadd_back(list_ptr, ft_makehexa(args, &format, 1));
 	else
 		return (0);
 	return (1);
 }
 
-int	ft_print_str(const char *format, va_list args)
+int	ft_print_str(const char *str, va_list args)
 {
-	int		i;
-	int		count;
-	t_list	*list;
+	int			i;
+	int			count;
+	t_list		*list;
+	t_format	format;
 
 	i = 0;
 	list = 0;
-	while (format[i])
+	while (str[i])
 	{
-		if (ft_fill_list(&list, args, format, i))
+		if (ft_fill_list(&list, args, str, &i))
 			;
-		else if (ft_checkfor('p', format, i))
-			ft_lstadd_back(&list, ft_makeaddr(args));
-		else if (ft_checkfor('%', format, i))
+		else if (ft_checkfor('p', str, &i, &format))
+			ft_lstadd_back(&list, ft_makeaddr(args, &format));
+		else if (str[i] == '%' && str[i + 1] == '%')
 			ft_lstadd_back(&list, ft_lstnew(ft_char2str('%')));
-		else if (ft_checkfor('s', format, i))
-			ft_lstadd_back(&list, ft_makestr(args));
+		else if (ft_checkfor('s', str, &i, &format))
+			ft_lstadd_back(&list, ft_makestr(args, &format));
 		else
-			ft_lstadd_back(&list, ft_lstnew(ft_char2str(format[i--])));
-		i += 2;
+			ft_lstadd_back(&list, ft_lstnew(ft_char2str(str[i++])));
 	}
 	ft_lstiter(list, ft_print_result);
 	count = ft_get_res_len(list);

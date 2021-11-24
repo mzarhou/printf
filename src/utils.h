@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_makeuint.c                                      :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 16:27:18 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 23:03:22 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/24 21:31:44 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/24 21:32:04 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_makers.h"
+#ifndef UTILS_H
+# define UTILS_H
+# include <stdlib.h>
+# include <stdint.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <stdarg.h>
+# include <unistd.h>
 
-t_list	*ft_makeuint(va_list args, const t_format *format)
-{
-	format = 0;
-	return (ft_lstnew(
-			ft_utoa(va_arg(args, unsigned int))
-		));
-}
+#endif

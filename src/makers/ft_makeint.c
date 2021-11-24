@@ -6,12 +6,11 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:26:39 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 18:21:01 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/24 23:03:07 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_makers.h"
-
 
 static char	*padd_it(char *str, const t_format *format)
 {
@@ -20,7 +19,7 @@ static char	*padd_it(char *str, const t_format *format)
 	padd_length = format->min_width - ft_strlen(str);
 	if (format->flags.blank)
 		padd_length--;
-	if (format->min_width > ft_strlen(str))
+	if ((size_t)format->min_width > ft_strlen(str))
 	{
 		if (format->max_width > -1 || !format->flags.zero)
 			return (ft_padd(str, ' ', padd_length, format->flags.minus));
@@ -40,16 +39,10 @@ static char	*make_it(char *str, const t_format *format)
 				str,
 				ft_padd_left(str, '0', format->max_width - ft_strlen(str))
 				);
-	is_zero = format->max_width == 0 && ft_strlen(str) == 1 && str[0] == '0';
+	is_zero = (format->max_width == 0 && ft_strlen(str) == 1 && str[0] == '0');
 	if (is_zero)
-		str = (ft_assign_free(
-			str,
-			ft_strdup("")
-		));
-	str = ft_assign_free(
-		str,
-		padd_it(str, format)
-	);
+		str = (ft_assign_free(str, ft_strdup("")));
+	str = ft_assign_free(str, padd_it(str, format));
 	if (format->flags.blank)
 		return (ft_strjoin_free(ft_strdup(" "), str));
 	return (str);

@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_makeuint.c                                      :+:      :+:    :+:   */
+/*   ft_format.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 16:27:18 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 23:03:22 by mzarhou          ###   ########.fr       */
+/*   Created: 2021/11/24 22:12:09 by mzarhou           #+#    #+#             */
+/*   Updated: 2021/11/24 22:26:48 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_makers.h"
+#ifndef FT_FORMAT_H
+# define FT_FORMAT_H
 
-t_list	*ft_makeuint(va_list args, const t_format *format)
+typedef struct flags
 {
-	format = 0;
-	return (ft_lstnew(
-			ft_utoa(va_arg(args, unsigned int))
-		));
-}
+	int	minus;
+	int	zero;
+	int	plus;
+	int	blank;
+	int	hash;
+}	t_flags;
+
+typedef struct format
+{
+	struct flags	flags;
+	int				min_width;
+	int				max_width;
+	int				precision;
+}	t_format;
+
+#endif
