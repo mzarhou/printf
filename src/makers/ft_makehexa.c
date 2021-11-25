@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:27:05 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 23:02:56 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 03:08:19 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ static char	*ft_move_0x(const char *str)
 	return (ret);
 }
 
-static char	*make_it(char *str, const t_format *format)
+static char	*make_it(const char *s, const t_format *format)
 {
-	int	is_zero;
+	int		is_zero;
+	char	*str;
 
 	is_zero = 1;
+	str = ft_strdup(s);
 	if (format->max_width > -1 && (size_t)format->max_width > ft_strlen(str))
 		str = ft_assign_free(
 				str,
@@ -86,7 +88,11 @@ static char	*make_it(char *str, const t_format *format)
 t_list	*ft_makehexa(va_list args, const t_format *format, int uppercase)
 {
 	char	*str;
+	char	*prefix;
 
 	str = ft_uint2hexa8(va_arg(args, int), uppercase);
-	return (ft_lstnew(make_it(str, format)));
+	str = ft_assign_free(str, make_it(str, format));
+	if (uppercase && str && str[1] == 'x')
+		str[1] = 'X';
+	return (ft_lstnew(str));
 }
