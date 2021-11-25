@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:27:02 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 16:09:44 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:18:18 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ t_list	*ft_makeaddr(va_list args, const t_format *format)
 			ft_strdup("0x"),
 			ft_uint2hexa(uptr)
 			);
-	return (ft_lstnew(make_it(str, format)));
+	str = ft_assign_free(str, make_it(str, format));
+	return (ft_lstnew(str));
 }
