@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:34:17 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 22:27:18 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 16:47:14 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_char2str(char c);
 char	*ft_uint2hexa(uintptr_t a);
 char	*ft_uint2hexa8(uint32_t a, int uppercase);
 char	*ft_utoa(unsigned int nb);
-int		ft_checkfor(char c, const char *str, int *index, t_format *format);
+int		ft_get_format(const char *str, int index, t_format *format);
 char	*ft_assign_free(char *str, char *value);
 
 #endif

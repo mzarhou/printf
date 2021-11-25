@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/25 02:39:15 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 16:58:40 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,26 @@ void	ft_print_result(void *str)
 		ft_putstr_fd((char *)str, 1);
 }
 
-int	ft_fill_list(t_list **list_ptr, va_list args, const char *str, int *index)
+int	ft_fill_list(t_list **list_ptr, va_list args, char c, t_format *format)
 {
-	t_format	format;
-
-	ft_init_format(&format);
-	if (ft_checkfor('c', str, index, &format))
-		ft_lstadd_back(list_ptr, ft_makechar(list_ptr, args, &format));
-	else if (ft_checkfor('d', str, index, &format))
-		ft_lstadd_back(list_ptr, ft_makeint(args, &format));
-	else if (ft_checkfor('i', str, index, &format))
-		ft_lstadd_back(list_ptr, ft_makeint(args, &format));
-	else if (ft_checkfor('u', str, index, &format))
-		ft_lstadd_back(list_ptr, ft_makeuint(args, &format));
-	else if (ft_checkfor('x', str, index, &format))
-		ft_lstadd_back(list_ptr, ft_makehexa(args, &format, 0));
-	else if (ft_checkfor('X', str, index, &format))
-		ft_lstadd_back(list_ptr, ft_makehexa(args, &format, 1));
+	if (c == 'c')
+		ft_lstadd_back(list_ptr, ft_makechar(list_ptr, args, format));
+	else if (c == 's')
+		ft_lstadd_back(list_ptr, ft_makestr(args, format));
+	else if (c == 'p')
+		ft_lstadd_back(list_ptr, ft_makeaddr(args, format));
+	else if (c == 'd')
+		ft_lstadd_back(list_ptr, ft_makeint(args, format));
+	else if (c == 'i')
+		ft_lstadd_back(list_ptr, ft_makeint(args, format));
+	else if (c == 'u')
+		ft_lstadd_back(list_ptr, ft_makeuint(args, format));
+	else if (c == 'x')
+		ft_lstadd_back(list_ptr, ft_makehexa(args, format, 0));
+	else if (c == 'X')
+		ft_lstadd_back(list_ptr, ft_makehexa(args, format, 1));
+	else if (c == '%')
+		ft_lstadd_back(list_ptr, ft_lstnew(ft_char2str('%')));
 	else
 		return (0);
 	return (1);
@@ -73,14 +76,11 @@ int	ft_print_str(const char *str, va_list args)
 	ft_init_format(&format);
 	while (str[i])
 	{
-		if (ft_fill_list(&list, args, str, &i))
-			;
-		else if (ft_checkfor('p', str, &i, &format))
-			ft_lstadd_back(&list, ft_makeaddr(args, &format));
-		else if (str[i] == '%' && str[i + 1] == '%' && ++i)
-			ft_lstadd_back(&list, ft_lstnew(ft_char2str('%')));
-		else if (ft_checkfor('s', str, &i, &format))
-			ft_lstadd_back(&list, ft_makestr(args, &format));
+		if (str[i] == '%')
+		{
+			i += ft_get_format(str, i, &format);
+			ft_fill_list(&list, args, str[i], &format);
+		}
 		else
 			ft_lstadd_back(&list, ft_lstnew(ft_char2str(str[i])));
 		i++;
