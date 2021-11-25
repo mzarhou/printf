@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/25 00:39:26 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:39:15 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_fill_list(t_list **list_ptr, va_list args, const char *str, int *index)
 {
 	t_format	format;
 
+	ft_init_format(&format);
 	if (ft_checkfor('c', str, index, &format))
 		ft_lstadd_back(list_ptr, ft_makechar(list_ptr, args, &format));
 	else if (ft_checkfor('d', str, index, &format))
@@ -69,6 +70,7 @@ int	ft_print_str(const char *str, va_list args)
 
 	i = 0;
 	list = 0;
+	ft_init_format(&format);
 	while (str[i])
 	{
 		if (ft_fill_list(&list, args, str, &i))
