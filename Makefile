@@ -22,7 +22,7 @@ SRCS_MAKERS = ft_makeaddr.c \
 
 SRCS_UTILS = assign_free.c \
 		char2str.c \
-		check_for.c \
+		get_format.c \
 		ft_utoa.c \
 		strjoin_free.c \
 		uint2hexa.c \
