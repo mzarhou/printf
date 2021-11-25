@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 15:07:08 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 22:23:41 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 00:39:26 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ int	ft_print_str(const char *str, va_list args)
 			;
 		else if (ft_checkfor('p', str, &i, &format))
 			ft_lstadd_back(&list, ft_makeaddr(args, &format));
-		else if (str[i] == '%' && str[i + 1] == '%')
+		else if (str[i] == '%' && str[i + 1] == '%' && ++i)
 			ft_lstadd_back(&list, ft_lstnew(ft_char2str('%')));
 		else if (ft_checkfor('s', str, &i, &format))
 			ft_lstadd_back(&list, ft_makestr(args, &format));
 		else
-			ft_lstadd_back(&list, ft_lstnew(ft_char2str(str[i++])));
+			ft_lstadd_back(&list, ft_lstnew(ft_char2str(str[i])));
+		i++;
 	}
 	ft_lstiter(list, ft_print_result);
 	count = ft_get_res_len(list);

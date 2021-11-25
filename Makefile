@@ -19,6 +19,8 @@ $(NAME): $(OBJS)
 $(LIBFT):
 	${MAKE} -C ${LIBFT}
 
+bonus: all
+
 clean:
 	${MAKE} $@ -C ${LIBFT}
 	${RM} ${OBJS}
