@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 16:27:05 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/25 03:08:19 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 05:33:06 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*padd_it(char *str, const t_format *format, int is_zero)
 	padd_length = format->min_width - ft_strlen(str);
 	if (!is_zero && format->flags.hash)
 		padd_length -= 2;
-	if ((size_t)format->min_width > ft_strlen(str))
+	if (format->min_width > (int)ft_strlen(str))
 	{
 		if (format->max_width > -1 || !format->flags.zero)
 			return (ft_padd(str, ' ', padd_length, format->flags.minus));
