@@ -6,7 +6,7 @@
 /*   By: mzarhou <mzarhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:47:05 by mzarhou           #+#    #+#             */
-/*   Updated: 2021/11/24 21:57:21 by mzarhou          ###   ########.fr       */
+/*   Updated: 2021/11/25 02:12:59 by mzarhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ t_list	*ft_makechar(t_list **list_ptr, va_list args, const t_format *format)
 
 	c = va_arg(args, int);
 	str = ft_char2str(c);
+	str = ft_assign_free(str, make_it(str, format));
 	if (c == 0)
 	{
-		ft_lstadd_back(list_ptr, ft_lstnew(make_it(str, format)));
+		ft_lstadd_back(list_ptr, ft_lstnew(str));
 		return (ft_lstnew(0));
 	}
-	return (ft_lstnew(make_it(str, format)));
+	return (ft_lstnew(str));
 }
